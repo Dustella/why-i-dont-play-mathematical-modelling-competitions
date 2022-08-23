@@ -1,7 +1,7 @@
 import numpy as np
 res = {}
 x = []; y = []
-with open('PaP.txt','r') as f:
+with open('./1/PaP.txt','r') as f:
     raw = f.readlines()
     for i in range(len(raw)):
         [key , value] = raw[i].replace('\n','').split('\t')
@@ -76,12 +76,14 @@ y_show=np.poly1d(y_fit)#函数优美的形式
 
 print(y_show)#打印
 y1=f_fit(x,y_fit)
-plt.plot(x,y,'r',label='original')
+font_conf = {'family': 'Times New Roman'}
 plt.scatter(x,y,c='g',label='before_fitting')#散点图
 plt.plot(x,y1,'b--',label='fitting')
-plt.title('polyfitting')
-plt.xlabel('x')
-plt.ylabel('y')
+plt.title('polyfitting')    
+plt.xticks(fontproperties = 'Times New Roman')
+plt.yticks(fontproperties = 'Times New Roman')
+plt.xlabel('x',fontdict=font_conf)
+plt.ylabel('y',fontdict=font_conf)
 plt.legend()#显示标签
 plt.show()
 
