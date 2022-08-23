@@ -13,7 +13,7 @@ class Generator:
     # 设置传入的打开时间
     duration = 0 # 传入的阀门打开时间
     Pr_full = [] # 记录每0.01ms的管内压
-    ranging = 10 * 1000 * 100
+    ranging = 15 * 1000 * 100
 
     def __init__(self, duration) -> None:
         """对于一个打开毫秒，计算差平方的和
@@ -49,11 +49,12 @@ class Generator:
         """Pr_last:上一秒钟的Pr压力"""
 
         if len(self.Pr_full) == 0:
-            Pr_last = 160
+            Pr_last = 100
         else:
             Pr_last = self.Pr_full[-1]
         v = 500 * 3.14 * 5 * 5 # 管子的体积
         time = len(self.Pr_full) / 100
+        if time > 5*1000 : self.duration = 0.3225
         # Kf = 0.02893 *Pr_last *Pr_last + 3.077 *Pr_last + 1572
         Kf = 12000 *(1+0.6*(Pr_last/600))
         Qin = self.get_Qin(time)
@@ -72,6 +73,11 @@ class Generator:
     def plot(self):
         x =  np.linspace(0,self.ranging/100,self.ranging)
         y = np.array(self.Pr_full)
+        font_conf = {'family': 'Times New Roman'}
+        plt.ylabel('Pressure /MPa',fontdict=font_conf)
+        plt.xlabel('time /ms',fontdict=font_conf)
+        plt.xticks(fontproperties = 'Times New Roman')
+        plt.yticks(fontproperties = 'Times New Roman')
         plt.plot(x,y,'r',label='original')
         # plt.scatter(x,y,c='g',label='')#散点图
         plt.show()
@@ -87,7 +93,6 @@ def main():
     for i in x:
         a = Generator(i)
         res = a.get_res()
-        # print(f'res is {res} last is {last}')
         if res < last:
             last = res
         y.append(res)
@@ -102,5 +107,6 @@ if __name__ == '__main__':
     # main()
     # 10s 
     # a = Generator(0.3244)
-    a = Generator(0.3235)
+    # a = Generator(0.3235) # 这个可以稳定在150
+    a = Generator(0.343)
     a.plot()

@@ -96,10 +96,10 @@ def main():
     font_conf = {'family': 'Times New Roman'}
     plt.ylabel('Sum of squares of deviations',fontdict=font_conf)
     plt.xlabel('Opening time of one-way valve',fontdict=font_conf)
-    plt.plot(x,y,'r',label='original')
-    plt.scatter(x,y,c='g',label='before_fitting')#散点图
     plt.xticks(fontproperties = 'Times New Roman')
     plt.yticks(fontproperties = 'Times New Roman')
+    plt.plot(x,y,'r',label='original')
+    plt.scatter(x,y,c='g',label='before_fitting')#散点图
     plt.show()
     
 if __name__ == '__main__':
